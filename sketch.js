@@ -30,20 +30,9 @@ function preload() {
 function setup() {
     createCanvas(600, 300)
     colorMode(HSB, 360, 100, 100, 100)
-    // textAlign(CENTER, CENTER); // used for displaying chars inside vehicles
 
-    /**
-     *  Add two sets of points: happy birthday, and Liya! centered below.
-     */
-    points = font.textToPoints('happy birthday, ', 80, 100, 48, {
-        sampleFactor: 0.01, // increase for more points
-        // simplifyThreshold: 0 // increase to remove collinear points
-    })
-
-    points = points.concat(font.textToPoints('Liya!', 200, 175, 72, {
-        sampleFactor: 0.06, // increase for more points
-    }))
-
+    points = addHBLiya()
+    // points = addTwosDay()
     console.log(points.length)
 
     /** populate vehicles array with their coordinates from textToPoints */
@@ -54,6 +43,40 @@ function setup() {
     }
 
     arrival = false
+}
+
+
+/** returns text point locations for "happy birthday, Liya!" centered
+ *  292 points
+ */
+function addHBLiya() {
+    let pts = font.textToPoints('happy birthday,', 90, 100, 48, {
+        sampleFactor: 0.01, // increase for more points
+        // simplifyThreshold: 0 // increase to remove collinear points
+    })
+
+    pts = pts.concat(font.textToPoints('Liya!', 200, 175, 72, {
+        sampleFactor: 0.06, // increase for more points
+    }))
+
+    return pts
+}
+
+
+/** returns text point locations for "happy twosday! 2.22.22 2:22pm" centered
+ *  313 points
+ */
+function addTwosDay() {
+    let pts = font.textToPoints('happy twosday!', 100, 100, 48, {
+        sampleFactor: 0.01, // increase for more points
+        // simplifyThreshold: 0 // increase to remove collinear points
+    })
+
+    pts = pts.concat(font.textToPoints('2.22.22 2:22pm', 90, 175, 48, {
+        sampleFactor: 0.06, // increase for more points
+    }))
+
+    return pts
 }
 
 

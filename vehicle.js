@@ -3,7 +3,7 @@ class Vehicle {
         this.pos = new p5.Vector(random(width), random(height))
         this.vel = p5.Vector.random2D()
         this.acc = new p5.Vector()
-        this.r = random(2, 4)
+        this.r = random(2, 5)
         this.target = new p5.Vector(x, y)
         this.maxspeed = 5
         this.maxforce = 1
