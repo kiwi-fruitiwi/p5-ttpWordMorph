@@ -57,14 +57,15 @@ function alterPoints(inputPts) {
      *          iterate and assign
      */
 
-    const currentPtsCount = points.length
+    const currentVehicleCount = vehicles.length
     const newPtsCount = inputPts.length
 
-    if (newPtsCount > currentPtsCount) {
+    console.log(`new: ${newPtsCount}, current: ${currentVehicleCount}`)
+    if (newPtsCount >= currentVehicleCount) {
         /* iterate through new points, assigning new v.target.pos.x/y */
-
         let stopIndex = 0
         for (let i in vehicles) {
+
             let v = vehicles[i]
             v.target.x = inputPts[i].x
             v.target.y = inputPts[i].y
@@ -72,12 +73,25 @@ function alterPoints(inputPts) {
         }
 
         /* add extra points; stopPoint lets us pick up where we left off */
-        for (let i=0; i<newPtsCount-currentPtsCount; i++) {
+        /* note that if the counts are the same, this code does not execute */
+        let difference = newPtsCount-currentVehicleCount
+        for (let i=0; i<difference; i++) {
             let stopPoint = inputPts[stopIndex+i]
             vehicles.push(new Vehicle(stopPoint.x, stopPoint.y))
 
             // console.log(`i:${i}, stopIndex+i: ${stopIndex+i}`)
         }
+    } else { /* currentVehicleCount > newPtsCount so we need to delete! */
+        /*  */
+        let stopIndex = 0
+        for (let i in inputPts) {
+            let v = vehicles[i]
+            v.target.x = inputPts[i].x
+            v.target.y = inputPts[i].y
+            stopIndex = i
+        }
+
+        vehicles = vehicles.slice(0, stopIndex)
     }
 
     recolor()
@@ -162,12 +176,12 @@ function keyPressed() {
     }
 
     if (key === '2') {
-        alterPoints(addTwosDay())
+        alterPoints(addHBLiya())
         recolor()
     }
 
     if (key === '3') {
-        alterPoints(addHBLiya())
+        alterPoints(addTwosDay())
         recolor()
     }
 
