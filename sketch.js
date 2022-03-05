@@ -2,6 +2,13 @@
  *  @author Kiwi
  *  @date 2022.03.04
  *
+ *
+ * ☐ text morphing: morph cycle → cyclic pointsList in setup
+ *    better to just do 1,2,3,4,5,6,7,8,9,0
+ *    I guess we could do a randomization feature with one button switch
+ * ☐ add instruction divs: small caps
+ *    right click → toggle wordSnap / 'magnetics'
+ *        disable context actions
  */
 
 let bpdots, consolas
@@ -21,7 +28,8 @@ function setup() {
     createCanvas(600, 300)
     colorMode(HSB, 360, 100, 100, 100)
 
-    points = addGiantTwo()
+    points = addLiya()
+    // points = addGiantTwo()
     // points = addHBLiya()
     // points = addTwosDay()
     console.log(points.length)
@@ -116,7 +124,7 @@ function addHBLiya() {
 }
 
 
-/** returns text point locations for "happy twosday! 2.22.22 2:22pm" centered
+/** returns text point locations for "happy twosday! 2.22.22 2:22pm", centered
  *  313 points
  */
 function addTwosDay() {
@@ -130,6 +138,17 @@ function addTwosDay() {
     }))
 
     return pts
+}
+
+
+/** returns text point locations for "Liya", centered
+ *  313 points
+ */
+function addLiya() {
+    return bpdots.textToPoints('Liya 💖', 50, 200, 224, {
+        sampleFactor: 0.015, // increase for more points
+        // simplifyThreshold: 0 // increase to remove collinear points
+    })
 }
 
 
@@ -182,6 +201,11 @@ function keyPressed() {
 
     if (key === '3') {
         alterPoints(addTwosDay())
+        recolor()
+    }
+
+    if (key === '4') {
+        alterPoints(addLiya())
         recolor()
     }
 
