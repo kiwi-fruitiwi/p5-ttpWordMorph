@@ -41,7 +41,7 @@ function setup() {
         vehicles.push(vehicle)
     }
 
-    recolor()
+    colorByIndex()
     arrival = false
 }
 
@@ -102,7 +102,7 @@ function alterPoints(inputPts) {
         vehicles = vehicles.slice(0, stopIndex)
     }
 
-    recolor()
+    colorByIndex()
 }
 
 
@@ -145,8 +145,8 @@ function addTwosDay() {
  *  313 points
  */
 function addLiya() {
-    return bpdots.textToPoints('Liya 💖', 50, 200, 224, {
-        sampleFactor: 0.015, // increase for more points
+    return consolas.textToPoints('Liya', 50, 200, 224, {
+        sampleFactor: 0.2, // increase for more points
         // simplifyThreshold: 0 // increase to remove collinear points
     })
 }
@@ -191,22 +191,22 @@ function keyPressed() {
     /* convert sketch display between different layouts */
     if (key === '1') {
         alterPoints(addGiantTwo())
-        recolor()
+        colorByIndex()
     }
 
     if (key === '2') {
         alterPoints(addHBLiya())
-        recolor()
+        colorByIndex()
     }
 
     if (key === '3') {
         alterPoints(addTwosDay())
-        recolor()
+        colorByIndex()
     }
 
     if (key === '4') {
         alterPoints(addLiya())
-        recolor()
+        colorByPosX()
     }
 
 
@@ -237,11 +237,21 @@ function keyPressed() {
 }
 
 
-/** assign a rainbow of colors to our vehicles
+/** assign a rainbow of colors to our vehicles based on index
  */
-function recolor() {
+function colorByIndex() {
     for (let index in vehicles) {
         vehicles[index].hue =
             map(parseInt(index), 0, vehicles.length, 0, 330)
+    }
+}
+
+
+/** assign a rainbow of colors to our vehicles based on x position of target
+ */
+function colorByPosX() {
+    for (let index in vehicles) {
+        vehicles[index].hue =
+            map(vehicles[index].target.x, 75, width-75, 0, 345)
     }
 }
