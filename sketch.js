@@ -53,7 +53,7 @@ let vehicles = []
 let points = []
 
 let arrival // flag for whether 'going home' is turned on
-
+let instructions
 
 function preload() {
     bpdots = loadFont('data/bpdots.otf')
@@ -62,8 +62,18 @@ function preload() {
 
 
 function setup() {
-    createCanvas(600, 300)
+    let cnv = createCanvas(600, 300)
+    cnv.parent('#canvas')
+
     colorMode(HSB, 360, 100, 100, 100)
+
+    instructions = select('#ins')
+    instructions.html(`<pre>
+        [1,2,3,4] → switch scenes
+        s → toggle magnetics
+        z → freeze sketch
+        </pre>`)
+    // instructions.parent('main')
 
     points = addLiya()
     // points = addGiantTwo()
