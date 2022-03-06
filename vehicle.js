@@ -8,8 +8,6 @@ class Vehicle {
         this.maxspeed = 5
         this.maxforce = 1
         this.hue = random(360)
-
-        this.showText = true
     }
 
 

@@ -11,6 +11,43 @@
  *        disable context actions
  */
 
+/**
+ *  coding plan from scratch
+ *  basic physics system
+ *     particle constructor
+ *         random starting pos
+ *         velocity
+ *         acceleration
+ *         radius
+ *         target or 'home' vector
+ *         maxspeed, maxforce
+ *     update, applyforce, show
+ *     create 300 particles → test with gravity vector
+ *     edges, wrap
+ *
+ *  steering behaviors
+ *     seek ← steering vector = desired - velocity
+ *     arrive ← seek with distance force map
+ *     fleeFromMouse ← flee.mult(2) within distance d=70
+ *     returnToTextOrigin ← apply arrive force to home
+ *
+ *  heyPressed: noLoop, log particles.length, flip arrival
+ *
+ *  functions to create textToPoints pts to particles
+ *     setup fonts: bpdots, consola
+ *  hue in particle.js
+ *     colorByIndex ← map hue to number of particles
+ *     colorByHomePos ← map hue to home.pos.x
+ *
+ *  alterPoints: textMorph
+ *     compare lengths of particles vs new points
+ *     two cases: ≥, <
+ *
+ *  additions
+ *     scene cycle
+ *     instruction divs
+ */
+
 let bpdots, consolas
 let vehicles = []
 let points = []
