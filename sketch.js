@@ -2,11 +2,12 @@
  *  @author Kiwi
  *  @date 2022.03.04
  *
- *
- * ☐ text morphing: morph cycle → cyclic pointsList in setup
+ * ☐ wand with particle emitter for cursor
+ * ☐ one additional scene while removing big 'Liya'
+ * ☒ text morphing: morph cycle → cyclic pointsList in setup
  *    better to just do 1,2,3,4,5,6,7,8,9,0
  *    I guess we could do a randomization feature with one button switch
- * ☐ add instruction divs: small caps
+ * ☒ add instruction divs: small caps
  *    right click → toggle wordSnap / 'magnetics'
  *        disable context actions
  */
@@ -63,6 +64,7 @@ function preload() {
 
 function setup() {
     let cnv = createCanvas(600, 300)
+    noCursor()
     cnv.parent('#canvas')
 
     colorMode(HSB, 360, 100, 100, 100)
@@ -75,7 +77,7 @@ function setup() {
         </pre>`)
     // instructions.parent('main')
 
-    points = addLiya()
+    points = addBigLiya()
     // points = addGiantTwo()
     // points = addHBLiya()
     // points = addTwosDay()
@@ -191,7 +193,7 @@ function addTwosDay() {
 /** returns text point locations for "Liya", centered
  *  313 points
  */
-function addLiya() {
+function addBigLiya() {
     return consolas.textToPoints('Liya', 50, 200, 224, {
         sampleFactor: 0.2, // increase for more points
         // simplifyThreshold: 0 // increase to remove collinear points
@@ -212,6 +214,11 @@ function addGiantTwo() {
 
 function draw() {
     background(236, 37, 25)
+    fill(0, 0, 100, 70)
+    stroke(0, 0, 100)
+    circle(mouseX, mouseY, 10)
+
+
     /** display all points and behaviors */
     for (let i = 0; i < vehicles.length; i++) {
         let v = vehicles[i]
@@ -252,7 +259,7 @@ function keyPressed() {
     }
 
     if (key === '4') {
-        alterPoints(addLiya())
+        alterPoints(addBigLiya())
         colorByPosX()
     }
 
