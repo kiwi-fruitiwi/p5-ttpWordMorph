@@ -139,7 +139,6 @@ function alterPoints(inputPts) {
             // console.log(`i:${i}, stopIndex+i: ${stopIndex+i}`)
         }
     } else { /* currentVehicleCount > newPtsCount so we need to delete! */
-        /*  */
         let stopIndex = 0
         for (let i in inputPts) {
             let v = vehicles[i]
@@ -234,7 +233,7 @@ function draw() {
 
 
 function keyPressed() {
-    /* begin song */
+    /* toggle arrival */
     if (key === 's') {
         if (!arrival)
             arrival = true
