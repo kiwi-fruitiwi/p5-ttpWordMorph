@@ -2,7 +2,7 @@
  *  @author Kiwi
  *  @date 2022.03.04
  *
- *
+ * ☐ png
  * ☐ add additional 2's that fade in after a set time: millis() > t, add pts
  * ☐ moving text points
  *
@@ -124,7 +124,7 @@ function draw() {
         arrival = true
     }
 
-    cursorEmitter.applyForce(new p5.Vector(0, 0.098))
+    cursorEmitter.applyForce(new p5.Vector(0, 0.0098))
     cursorEmitter.update()
     cursorEmitter.show()
 }
@@ -306,6 +306,7 @@ function keyPressed() {
     /* stop sketch */
     if (key === 'z') {
         noLoop()
+        cursor()
     }
 
 

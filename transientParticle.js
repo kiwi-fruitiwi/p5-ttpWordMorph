@@ -19,7 +19,10 @@ class TransientParticle extends Particle {
 
     show() {
         stroke(this.hue, 100, 100, 100)
-        fill(this.hue, 100, 100, this.lifetime)
-        circle(this.pos.x, this.pos.y, this.r*2)
+        // fill(this.hue, 100, 100, this.lifetime)
+        // circle(this.pos.x, this.pos.y, this.r*2)
+
+        tint(0, 0, 100, this.lifetime)
+        image(this.img, this.pos.x, this.pos.y)
     }
 }
