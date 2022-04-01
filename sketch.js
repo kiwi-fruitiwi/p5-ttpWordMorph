@@ -2,8 +2,12 @@
  *  @author Kiwi
  *  @date 2022.03.04
  *
- * ☐ wand with particle emitter for cursor
- * ☐ one additional scene while removing big 'Liya'
+ *
+ * ☐ add additional 2's that fade in after a set time: millis() > t, add pts
+ * ☐ moving text points
+ *
+ * ☒ wand with particle emitter for cursor
+ * ☒ one additional scene while removing big 'Liya'
  * ☒ text morphing: morph cycle → cyclic pointsList in setup
  *    better to just do 1,2,3,4,5,6,7,8,9,0
  *    I guess we could do a randomization feature with one button switch
@@ -21,8 +25,8 @@
  *         acceleration
  *         radius
  *         target or 'home' vector
- *         maxspeed, maxforce
- *     update, applyforce, show
+ *         maxSpeed, maxForce
+ *     update, applyForce, show
  *     create 300 particles → test with gravity vector
  *     edges, wrap
  *
@@ -30,12 +34,12 @@
  *     seek ← steering vector = desired - velocity
  *     arrive ← seek with distance force map
  *     fleeFromMouse ← flee.mult(2) within distance d=70
- *     returnToTextOrigin ← apply arrive force to home
+ *     returnToTextOrigin ← apply force from  arrive() to home point
  *
- *  heyPressed: noLoop, log particles.length, flip arrival
+ *  keyPressed: noLoop, log particles.length, flip arrival
  *
  *  functions to create textToPoints pts to particles
- *     setup fonts: bpdots, consola
+ *     setup fonts: bpDots, consola
  *  hue in particle.js
  *     colorByIndex ← map hue to number of particles
  *     colorByHomePos ← map hue to home.pos.x
@@ -52,6 +56,7 @@
 let bpdots, consolas
 let vehicles = []
 let points = []
+let cursorEmitter
 
 let arrival // flag for whether 'going home' is turned on
 let instructions
@@ -77,7 +82,7 @@ function setup() {
         </pre>`)
     // instructions.parent('main')
 
-    points = addBigLiya()
+    points = addTwos()
     // points = addGiantTwo()
     // points = addHBLiya()
     // points = addTwosDay()
@@ -86,12 +91,42 @@ function setup() {
     /** populate vehicles array with their coordinates from textToPoints */
     for (let i = 0; i < points.length; i++) {
         let pt = points[i]
-        let vehicle = new Vehicle(pt.x, pt.y)
+        let vehicle = new Particle(pt.x, pt.y)
         vehicles.push(vehicle)
     }
 
-    colorByIndex()
+    colorByPosX()
     arrival = false
+    cursorEmitter = new Emitter(mouseX, mouseY, 'confetti')
+}
+
+
+function draw() {
+    background(236, 37, 25)
+    fill(0, 0, 100, 70)
+    stroke(0, 0, 100)
+    circle(mouseX, mouseY, 10)
+
+
+    /** display all points and behaviors */
+    for (let i = 0; i < vehicles.length; i++) {
+        let v = vehicles[i]
+        v.fleeFromMouse()
+        v.update()
+        v.wrap()
+        v.show()
+
+        if (arrival)
+            v.returnToTextOrigin()
+    }
+
+    if (millis() > 3000) {
+        arrival = true
+    }
+
+    cursorEmitter.applyForce(new p5.Vector(0, 0.098))
+    cursorEmitter.update()
+    cursorEmitter.show()
 }
 
 
@@ -134,7 +169,7 @@ function alterPoints(inputPts) {
         let difference = newPtsCount-currentVehicleCount
         for (let i=0; i<difference; i++) {
             let stopPoint = inputPts[stopIndex+i]
-            vehicles.push(new Vehicle(stopPoint.x, stopPoint.y))
+            vehicles.push(new Particle(stopPoint.x, stopPoint.y))
 
             // console.log(`i:${i}, stopIndex+i: ${stopIndex+i}`)
         }
@@ -189,6 +224,26 @@ function addTwosDay() {
 }
 
 
+/** returns text point locations for "happy twosday! 2.22.22 2:22pm", centered
+ *  313 points
+ */
+function addTwos() {
+    let pts = consolas.textToPoints('2', 200, 280, 384, {
+        sampleFactor: 0.1, // increase for more points
+    })
+
+    pts = pts.concat(consolas.textToPoints('2', 75, 175, 256, {
+        sampleFactor: 0.1, // increase for more points
+    }))
+
+    pts = pts.concat(consolas.textToPoints('2', 400, 175, 256, {
+        sampleFactor: 0.1, // increase for more points
+    }))
+
+    return pts
+}
+
+
 /** returns text point locations for "Liya", centered
  *  313 points
  */
@@ -208,27 +263,6 @@ function addGiantTwo() {
         sampleFactor: 0.1, // increase for more points
         // simplifyThreshold: 0 // increase to remove collinear points
     })
-}
-
-
-function draw() {
-    background(236, 37, 25)
-    fill(0, 0, 100, 70)
-    stroke(0, 0, 100)
-    circle(mouseX, mouseY, 10)
-
-
-    /** display all points and behaviors */
-    for (let i = 0; i < vehicles.length; i++) {
-        let v = vehicles[i]
-        v.fleeFromMouse()
-        v.update()
-        v.wrap()
-        v.show()
-
-        if (arrival)
-            v.returnToTextOrigin()
-    }
 }
 
 
@@ -258,7 +292,7 @@ function keyPressed() {
     }
 
     if (key === '4') {
-        alterPoints(addBigLiya())
+        alterPoints(addTwos())
         colorByPosX()
     }
 

@@ -1,4 +1,5 @@
-class Vehicle {
+/* a point of a word, not an emitter particle, which is a TransientParticle */
+class Particle {
     constructor(x, y) {
         this.pos = new p5.Vector(random(width), random(height))
         this.vel = p5.Vector.random2D()
