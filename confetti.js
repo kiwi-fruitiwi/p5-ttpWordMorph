@@ -1,4 +1,4 @@
-class Confetti extends TransientParticle {
+class Confetti extends Particle {
     constructor(x, y) {
         super(x, y)
         this.angle = random(TAU)

@@ -33,15 +33,16 @@ class Emitter {
 
     /** emits the correct type of particle */
     emit() {
-        // if (frameCount % 5 === 0)
-            for (let i=0; i<this.emissionRate; i++) {
+        if (frameCount % 2 === 0) {
+            for (let i = 0; i < this.emissionRate; i++) {
 
                 if (this.type === 'transientParticle')
                     this.particles.push(
-                        new TransientParticle(this.pos.x, this.pos.y))
+                        new Particle(this.pos.x, this.pos.y))
                 else if (this.type === 'confetti')
                     this.particles.push(new Confetti(this.pos.x, this.pos.y))
             }
+        }
     }
 
 

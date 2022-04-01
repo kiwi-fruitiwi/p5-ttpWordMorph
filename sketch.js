@@ -73,6 +73,7 @@ function setup() {
     cnv.parent('#canvas')
 
     colorMode(HSB, 360, 100, 100, 100)
+    imageMode(CENTER)
 
     instructions = select('#ins')
     instructions.html(`<pre>
@@ -91,7 +92,7 @@ function setup() {
     /** populate vehicles array with their coordinates from textToPoints */
     for (let i = 0; i < points.length; i++) {
         let pt = points[i]
-        let vehicle = new Particle(pt.x, pt.y)
+        let vehicle = new Vehicle(pt.x, pt.y)
         vehicles.push(vehicle)
     }
 
@@ -169,7 +170,7 @@ function alterPoints(inputPts) {
         let difference = newPtsCount-currentVehicleCount
         for (let i=0; i<difference; i++) {
             let stopPoint = inputPts[stopIndex+i]
-            vehicles.push(new Particle(stopPoint.x, stopPoint.y))
+            vehicles.push(new Vehicle(stopPoint.x, stopPoint.y))
 
             // console.log(`i:${i}, stopIndex+i: ${stopIndex+i}`)
         }
